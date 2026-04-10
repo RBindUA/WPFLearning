@@ -17,6 +17,7 @@ namespace ServiceIdentityAPI.Data
         {
             modelBuilder.Entity<UserIdentity>().ToTable("Password", "Person");
             modelBuilder.Entity<UserIdentity>().HasKey(k => k.BusinessEntityID);
+            modelBuilder.Entity<UserIdentity>().Ignore(u => u.Email);
         }
     }
 

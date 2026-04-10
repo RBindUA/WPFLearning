@@ -12,7 +12,7 @@ namespace ServiceIdentityAPI.Models
         public string Token { get; set; }
         public int BussinesEntityID { get; set; }
         //probably not going to be tested, but we`ll see
-        public DateTime Expiratin {  get; set; }
+        public DateTime Expiration {  get; set; }
 
     }
 }
