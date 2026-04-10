@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceIdentitiAPI.Services
 {
-    internal class Class1
+    public class RegisterService
     {
     }
 }

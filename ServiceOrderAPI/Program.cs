@@ -1,4 +1,4 @@
-﻿namespace ServiceIdentitiAPI
+﻿namespace ServiceOrderAPI
 {
     public class Program
     {

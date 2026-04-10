@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using UserService.User;
 
 namespace UserServiceAPI.Data
 {
-    internal class Class1
+    public class UserDbContext:DbContext
     {
+        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options) { }
+        public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().ToTable("Person","Person");
+            modelBuilder.Entity<User>().HasKey(k => k.BusinessEntityID);
+        }
     }
 }
