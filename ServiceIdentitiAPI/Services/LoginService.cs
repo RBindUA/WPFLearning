@@ -21,8 +21,13 @@ namespace ServiceIdentityAPI.Services
 
         public async Task<UserIdentity?> AuthenticateAsync(string email, string password)
         {
-            var identity = await _context.UserIdentitiy
-                .FirstOrDefaultAsync(u => u.Email == email);
+            var emailRecord = await _context.EmailAddress
+                .FirstOrDefaultAsync(e => e.EmailAddress == email);
+
+            if (emailRecord == null) return null;
+
+            var identity = await _context.UserIdentity
+                .FirstOrDefaultAsync(u => u.BusinessEntityID == emailRecord.BusinessEntityID);
 
             if (identity == null) return null;
 

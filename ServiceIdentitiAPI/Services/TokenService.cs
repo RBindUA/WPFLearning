@@ -20,14 +20,14 @@ namespace ServiceIdentityAPI.Services
             _config = config;
         }
 
-        public string GenerateToken(UserIdentity user)
+        public string GenerateToken(UserIdentity user, string email)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.BusinessEntityID.ToString()),
-                new Claim(ClaimTypes.Email, user.Email ?? ""),
+                new Claim(ClaimTypes.Email, email),
                 new Claim("LocalTime", DateTime.Now.ToString())
             };
 

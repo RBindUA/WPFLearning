@@ -11,14 +11,22 @@ namespace ServiceIdentityAPI.Data
     public class IdentityDbContext:DbContext
     {
         public IdentityDbContext(DbContextOptions<IdentityDbContext>options):base(options) { }
-        public DbSet<UserIdentity> UserIdentitiy { get; set; }
+        public DbSet<UserIdentity> UserIdentity { get; set; }
+        public DbSet<EmailRecord> EmailAddress { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserIdentity>().ToTable("Password", "Person");
             modelBuilder.Entity<UserIdentity>().HasKey(k => k.BusinessEntityID);
-            modelBuilder.Entity<UserIdentity>().Ignore(u => u.Email);
+
+            modelBuilder.Entity<EmailRecord>().ToTable("EmailAddress", "Person");
+            modelBuilder.Entity<EmailRecord>().HasKey(e => e.BusinessEntityID);
         }
+    }
+    public class EmailRecord
+    {
+        public int BusinessEntityID { get; set; }
+        public string EmailAddress { get; set; } // AdventureWorks.EmailAddress
     }
 
 }

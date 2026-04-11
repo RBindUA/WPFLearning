@@ -19,8 +19,11 @@ namespace ServiceIdentityAPI.Services
 
         public async Task<bool> RegisterAsync(string firstName, string lastName, string email, string password)
         {
+            //TO DO
+            throw new NotImplementedException(
+                "Going to be done after Identity,User,Order services is complited");
             //Salt generation
-            var salt = Guid.NewGuid().ToString().Substring(0, 10);
+            /*var salt = Guid.NewGuid().ToString().Substring(0, 10);
 
             var hash = CreateHash(password, salt);
 
@@ -33,8 +36,9 @@ namespace ServiceIdentityAPI.Services
                 PasswordSalt = salt
             };
 
-            _context.UserIdentitiy.Add(newUser);
+            _context.UserIdentity.Add(newUser);
             return await _context.SaveChangesAsync() > 0;
+            */
         }
         private string CreateHash(string password, string salt)
         {

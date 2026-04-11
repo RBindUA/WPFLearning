@@ -31,7 +31,7 @@ namespace ServiceIdentityAPI.Controllers
             if (user == null)
                 return StatusCode(401, new { message = "Invalid email or password" });
 
-            var token = _tokenService.GenerateToken(user);
+            var token = _tokenService.GenerateToken(user, request.Email);
 
             return Ok(new AuthResponse
             {

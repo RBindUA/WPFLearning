@@ -8,8 +8,6 @@ namespace ServiceIdentityAPI.Models
 {
     public class UserIdentity
     {
-        public string Email { get; set; }
-        //Person.Password
         public int BusinessEntityID { get; set; }
         // AdventureWorks uses SHA1 or SHA256 + Salt need to try 
         //nvarchar 128
