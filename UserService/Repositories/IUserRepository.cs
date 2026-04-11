@@ -1,4 +1,4 @@
-﻿using UserService.User;
+﻿using UserServiceAPI.Models;
 
 namespace UserServiceAPI.Repositories
 {

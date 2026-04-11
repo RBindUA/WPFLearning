@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UserService.User;
+using UserServiceAPI.Models;
 using UserServiceAPI.Repositories;
 
 namespace UserServiceAPI.Controllers

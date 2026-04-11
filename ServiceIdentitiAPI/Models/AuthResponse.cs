@@ -10,7 +10,7 @@ namespace ServiceIdentityAPI.Models
     {
         //JWT
         public string Token { get; set; }
-        public int BussinesEntityID { get; set; }
+        public int BusinessEntityID { get; set; }
         //probably not going to be tested, but we`ll see
         public DateTime Expiration {  get; set; }
 
