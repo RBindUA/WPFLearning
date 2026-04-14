@@ -23,10 +23,5 @@ namespace ServiceIdentityAPI.Data
             modelBuilder.Entity<EmailRecord>().HasKey(e => e.BusinessEntityID);
         }
     }
-    public class EmailRecord
-    {
-        public int BusinessEntityID { get; set; }
-        public string EmailAddress { get; set; } // AdventureWorks.EmailAddress
-    }
 
 }

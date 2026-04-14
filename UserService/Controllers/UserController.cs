@@ -18,15 +18,15 @@ namespace UserServiceAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
-            var user = await _repository.GetByIdAsync(id);
+            var userDto = await _repository.GetByIdAsync(id);
 
-            if (user == null)
+            if (userDto == null)
             {
                 //404
                 return NotFound(new { message = $"User with ID {id} not found." });
             }
             //200
-            return Ok(user);
+            return Ok(userDto);
         }
     }
 }
