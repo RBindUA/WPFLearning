@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 
 namespace ServiceOrderAPI.Models
 {
-    public class Order
+    public class OrderDetail
     {
         //Sales.SalesOrderDetail
+        public int SalesOrderDetailID { get; set; }
         public int SalesOrderID { get; set; }
         public int ProductID { get; set; }
-        public int OrderQty { get; set; }
+        public short OrderQty { get; set; }
+        public decimal UnitPrice { get; set; }
         public decimal LineTotal { get; set; }
+
 
     }
 }
