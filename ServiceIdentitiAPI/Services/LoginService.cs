@@ -31,13 +31,17 @@ namespace ServiceIdentityAPI.Services
 
             if (identity == null) return null;
 
-            //Bypass for testing
-            if (password == "admin")
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(c => c.PersonID == identity.BusinessEntityID);
+            
+            if (customer != null)
             {
-                return identity;
+                // Swap PersonID for CustomerID , not the same
+                identity.BusinessEntityID = customer.CustomerID;
             }
 
-            if (VerifyHash(password, identity.PasswordHash, identity.PasswordSalt))
+            //Bypass for testing
+            if (password == "admin" || VerifyHash(password, identity.PasswordHash, identity.PasswordSalt))
             {
                 return identity;
             }

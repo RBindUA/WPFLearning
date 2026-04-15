@@ -18,14 +18,15 @@ namespace ServiceOrderAPI.Controllers
             _repository = repository;
         }
 
-        [HttpGet("user/{customerId}")]
+        [HttpGet("user/{customerId}", Name = "GetOrderHistory")]
         public async Task<IActionResult> GetOrderHistory(int customerId)
         {
             var orders = await _repository.GetOrdersByCustomerIdAsync(customerId);
 
-            if (orders == null || !orders.Any())
+            if (orders == null)
             {
-                return NotFound(new { message = $"No orders found for customer {customerId}." });
+                //return 200 ok with list even if it`s empty
+                return Ok(new List<OrderHeader>());
             }
 
             return Ok(orders);
@@ -43,7 +44,7 @@ namespace ServiceOrderAPI.Controllers
                 return BadRequest(new { message = "Could not save the order to the database." });
             }
 
-            return CreatedAtAction(nameof(GetOrderHistory), new { customerId = newOrder.CustomerID }, newOrder);
+            return CreatedAtRoute(nameof(GetOrderHistory), new { customerId = newOrder.CustomerID }, newOrder);
         }
 
     }

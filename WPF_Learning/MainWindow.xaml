@@ -11,6 +11,9 @@
         <Button Content="Add to cart" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center" Height="40" Width="90"/>
         <Button Content="Order" Margin="40,291,670,103" Click="Button_Click"/>
         <DataGrid x:Name="CartGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="178,238,10,10"/>
+        <Button x:Name="btnTestLogic" Content="Button" HorizontalAlignment="Left" Margin="40,130,0,0" VerticalAlignment="Top" Height="39" Width="90" Click="btnTestLogic_Click"/>
+        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Margin="10,10,644,372"/>
+        <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="146" Height="39"/>
 
     </Grid>
 </Window>
