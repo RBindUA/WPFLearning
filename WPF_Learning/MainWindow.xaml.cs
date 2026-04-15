@@ -25,21 +25,36 @@ namespace WPF_Learning
 
         private async void btnTestLogic_Click(object sender, RoutedEventArgs e)
         {
-            var authService = new AuthService();
-            string user = txtUsername.Text;
-            string pass = txtPassword.Password;
-
-            bool isSuccess = await authService.LoginAsync(user, pass);
-
-            if (isSuccess)
+            if (txtPassword.Visibility == Visibility.Visible)
             {
-                MessageBox.Show($"Success! ID: {UserSession.BusinessEntityID}");
+                var authService = new AuthService();
+                string user = txtUsername.Text;
+                string pass = txtPassword.Password;
 
-                LoadOrderHistory();
+                bool isSuccess = await authService.LoginAsync(user, pass);
+
+                if (isSuccess)
+                {
+                    MessageBox.Show($"Success! ID: {UserSession.BusinessEntityID}");
+
+                    txtPassword.Visibility = Visibility.Collapsed;
+                    txtUsername.Visibility = Visibility.Collapsed;
+                    btnTestLogic.HorizontalAlignment = HorizontalAlignment.Left;
+                    btnTestLogic.VerticalAlignment = VerticalAlignment.Top;
+                    btnTestLogic.Margin = new Thickness(0);
+
+                    LoadOrderHistory();
+                }
+                else
+                {
+                    MessageBox.Show("Login failed. Check API and Credentials.");
+                }
             }
             else
             {
-                MessageBox.Show("Login failed. Check API and Credentials.");
+                txtPassword.Visibility = Visibility.Visible;
+                txtUsername.Visibility = Visibility.Visible;
+
             }
 
         }
