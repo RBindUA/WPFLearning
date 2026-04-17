@@ -23,8 +23,17 @@ namespace ServiceOrderAPI.Repositories
         }
         public async Task<bool> CreateOrderAsync(OrderHeader order)
         {
-            _context.OrderHeaders.Add(order);
-            return await _context.SaveChangesAsync() > 0;
+            try
+            {
+                _context.OrderHeaders.Add(order);
+                var result = await _context.SaveChangesAsync();
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return false;
+            }
         }
     }
 }

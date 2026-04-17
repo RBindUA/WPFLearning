@@ -11,5 +11,7 @@ namespace WPF_Learning.Models
         public int CustomerID { get; set; }
         public decimal TotalDue { get; set; }
         public DateTime OrderDate { get; set; }
+        public DateTime DueDate { get; set; }
+        public DateTime ShipDate { get; set; }
     }
 }

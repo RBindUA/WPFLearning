@@ -80,6 +80,7 @@ namespace WPF_Learning
 
         private async void btnPlaceOrder_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Starting to place order");
             if (Cart.Count == 0) return;
 
             try
@@ -88,14 +89,17 @@ namespace WPF_Learning
                 {
                     CustomerID = UserSession.BusinessEntityID,
                     TotalDue = Cart.Sum(x => x.ListPrice),
-                    OrderDate = DateTime.Now
+                    OrderDate = DateTime.Now,
+                    //Required by db
+                    DueDate = DateTime.Now.AddDays(7),
+                    ShipDate = DateTime.Now.AddDays(2)
                 };
 
                 bool isSuccess = await _orderService.SubmitOrderAsync(newOrder);
 
                 if (isSuccess)
                 {
-                    Catalog.Clear();
+                    LoadOrderHistory();
                     Cart.Clear();
                     MessageBox.Show("Order successful.");
                 }
@@ -148,6 +152,5 @@ namespace WPF_Learning
                 System.Diagnostics.Debug.WriteLine($"Failed to load catalog: {ex.Message}");
             }
         }
-
     }
 }

@@ -16,6 +16,10 @@ namespace ServiceOrderAPI.Data
 
             modelBuilder.Entity<OrderHeader>().ToTable("SalesOrderHeader", "Sales")
                .HasKey(o => o.SalesOrderID);
+            //Fixing precomputed sum for order
+            modelBuilder.Entity<OrderHeader>()
+                .Property(o => o.TotalDue)
+                .ValueGeneratedOnAddOrUpdate();
 
             modelBuilder.Entity<OrderHeader>()
                 .HasMany(o => o.OrderLines)

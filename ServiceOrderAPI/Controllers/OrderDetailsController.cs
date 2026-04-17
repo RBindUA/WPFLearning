@@ -37,6 +37,16 @@ namespace ServiceOrderAPI.Controllers
         {
             if (newOrder == null) return BadRequest("Order data is missing.");
 
+            //Fix for db 
+            newOrder.DueDate = DateTime.Now.AddDays(7);
+            newOrder.ShipDate = DateTime.Now.AddDays(2);
+            newOrder.Status = 1;
+            newOrder.ModifiedDate = DateTime.Now;
+            newOrder.rowguid = Guid.NewGuid();
+            newOrder.BillToAddressID = 1;
+            newOrder.ShipToAddressID = 1;
+            newOrder.ShipMethodID = 1;
+            newOrder.RevisionNumber = 1;
             var success = await _repository.CreateOrderAsync(newOrder);
 
             if (!success)
