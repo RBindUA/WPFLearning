@@ -25,6 +25,7 @@ namespace WPF_Learning
 
         private async void btnTestLogic_Click(object sender, RoutedEventArgs e)
         {
+            //TO DO: mess with visibilities and text in the future
             if (txtPassword.Visibility == Visibility.Visible)
             {
                 var authService = new AuthService();
@@ -37,8 +38,10 @@ namespace WPF_Learning
                 {
                     MessageBox.Show($"Success! ID: {UserSession.BusinessEntityID}");
 
+                    //Auth comleted. Show UI
                     txtPassword.Visibility = Visibility.Collapsed;
                     txtUsername.Visibility = Visibility.Collapsed;
+                    ProductGrid.Visibility = Visibility.Visible;
                     btnTestLogic.HorizontalAlignment = HorizontalAlignment.Left;
                     btnTestLogic.VerticalAlignment = VerticalAlignment.Top;
                     btnTestLogic.Margin = new Thickness(0);
@@ -52,6 +55,8 @@ namespace WPF_Learning
             }
             else
             {
+                //HIDE EVERYTHING during login
+                ProductGrid.Visibility = Visibility.Hidden;
                 txtPassword.Visibility = Visibility.Visible;
                 txtUsername.Visibility = Visibility.Visible;
 
