@@ -1,4 +1,6 @@
-﻿using System.Reflection.Metadata;
+﻿using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_Learning.Models;
 using WPF_Learning.Services;
 
 namespace WPF_Learning
@@ -17,11 +20,19 @@ namespace WPF_Learning
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
+
     {
+        public ObservableCollection<ProductDTO> Catalog { get; set; } = new ();
+        public ObservableCollection<ProductDTO> Cart { get; set; } = new();
+
+        private readonly OrderService _orderService = new();
+        private readonly ProductServiceClient _productService = new(new HttpClient());
         public MainWindow()
         {
             InitializeComponent();
-            ProductGrid.Visibility = Visibility.Hidden;
+            HistoryGrid.Visibility = Visibility.Hidden;
+            CatalogGrid.ItemsSource = Catalog;
+            CartGrid.ItemsSource = Cart;
         }
 
         private async void btnTestLogic_Click(object sender, RoutedEventArgs e)
@@ -42,12 +53,14 @@ namespace WPF_Learning
                     //Auth completed. Show UI
                     txtPassword.Visibility = Visibility.Collapsed;
                     txtUsername.Visibility = Visibility.Collapsed;
-                    ProductGrid.Visibility = Visibility.Visible;
+                    HistoryGrid.Visibility = Visibility.Visible;
+                    CatalogGrid.Visibility = Visibility.Visible;
                     btnTestLogic.HorizontalAlignment = HorizontalAlignment.Left;
                     btnTestLogic.VerticalAlignment = VerticalAlignment.Top;
                     btnTestLogic.Margin = new Thickness(0);
 
                     LoadOrderHistory();
+                    await LoadCatalog();
                 }
                 else
                 {
@@ -59,15 +72,46 @@ namespace WPF_Learning
                 //HIDE EVERYTHING during login
                 txtPassword.Visibility = Visibility.Visible;
                 txtUsername.Visibility = Visibility.Visible;
-                ProductGrid.Visibility = Visibility.Hidden;
+                HistoryGrid.Visibility = Visibility.Hidden;
 
             }
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void btnPlaceOrder_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException("will be done after Identity testing");
+            if (Cart.Count == 0) return;
+
+            try
+            {
+                var newOrder = new OrderDTO
+                {
+                    CustomerID = UserSession.BusinessEntityID,
+                    TotalDue = Cart.Sum(x => x.ListPrice),
+                    OrderDate = DateTime.Now
+                };
+
+                bool isSuccess = await _orderService.SubmitOrderAsync(newOrder);
+
+                if (isSuccess)
+                {
+                    Catalog.Clear();
+                    Cart.Clear();
+                    MessageBox.Show("Order successful.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Order Error: {ex.Message}");
+            }
+        }
+
+        private void btnAddToCart_Click(object sender, RoutedEventArgs e)
+        {
+            if (CatalogGrid.SelectedItem is ProductDTO selected)
+            {
+                Cart.Add(selected);
+            }
         }
 
         private async void LoadOrderHistory()
@@ -79,7 +123,7 @@ namespace WPF_Learning
             {
                 if (orders != null)
                 {
-                    ProductGrid.ItemsSource = orders;
+                    HistoryGrid.ItemsSource = orders;
                 }
             }
             catch (Exception ex)
@@ -88,5 +132,22 @@ namespace WPF_Learning
                 System.Windows.MessageBox.Show($"Detailed Error: {ex.Message} \n\n Inner: {ex.InnerException?.Message}");
             }
         }
+        private async Task LoadCatalog()
+        {
+            try
+            {
+                var products = await _productService.GetCatalogAsync();
+                if (products != null)
+                {
+                    Catalog.Clear();
+                    foreach (var p in products) Catalog.Add(p);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to load catalog: {ex.Message}");
+            }
+        }
+
     }
 }

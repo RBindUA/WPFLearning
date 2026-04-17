@@ -6,14 +6,15 @@
         xmlns:local="clr-namespace:WPF_Learning"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <DataGrid x:Name="ProductGrid" HorizontalAlignment="Left" Height="175" Margin="178,42,0,0" VerticalAlignment="Top" Width="612" d:ItemsSource="{d:SampleData ItemCount=5}" Visibility="Visible"/>
-        <Button Content="Add to cart" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center" Height="40" Width="90"/>
-        <Button Content="Order" Margin="40,291,670,103" Click="Button_Click"/>
-        <DataGrid x:Name="CartGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="178,238,10,10"/>
-        <Button x:Name="btnTestLogic" Content="Login" HorizontalAlignment="Center" Margin="0,287,0,0" VerticalAlignment="Top" Height="39" Width="90" Click="btnTestLogic_Click"/>
+    <Grid Margin="0,0,0,-16">
+        <DataGrid x:Name="CatalogGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="178,130,10,160"/>
+        <DataGrid x:Name="HistoryGrid" Height="103" Margin="178,0,10,0" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=5}" Visibility="Visible"/>
+        <Button x:Name="btnAddToCart" Content="Add to cart" Margin="0,213,710,181" Click="btnAddToCart_Click" HorizontalAlignment="Right" Width="90"/>
+        <Button x:Name="btnOrder" Content="Order" Margin="0,331,710,63" Click="btnPlaceOrder_Click" HorizontalAlignment="Right" Width="90"/>
+        <DataGrid x:Name="CartGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="178,287,10,0"/>
+        <Button x:Name="btnTestLogic" Content="Login" Margin="355,287,355,108" Click="btnTestLogic_Click"/>
         <TextBox x:Name="txtUsername" TextWrapping="Wrap" Margin="327,103,327,278"/>
-        <PasswordBox x:Name="txtPassword" HorizontalAlignment="Center" VerticalAlignment="Center" Width="146" Height="39"/>
+        <PasswordBox x:Name="txtPassword" Margin="327,198,327,197"/>
 
     </Grid>
 </Window>

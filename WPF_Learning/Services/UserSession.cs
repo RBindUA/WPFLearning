@@ -12,6 +12,7 @@ namespace WPF_Learning.Services
          * Order https://localhost:52635
          * User https://localhost:55646
          * Identity https://localhost:55648 
+         * Product https://localhost:7147
          */
         public static string? Token { get; set; }
         public static int BusinessEntityID { get; set; }

@@ -26,5 +26,22 @@ namespace WPF_Learning.Services
                 return null;
             }
         }
+        public async Task<bool> SubmitOrderAsync(OrderDTO order)
+        {
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", UserSession.Token);
+
+            try
+            {
+                var response = await _client.PostAsJsonAsync(_orderUrl, order);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Order Submission Failed: {ex.Message}");
+                return false;
+            }
+        }
     }
 }
