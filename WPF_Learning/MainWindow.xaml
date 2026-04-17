@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="ProductGrid" HorizontalAlignment="Left" Height="175" Margin="178,42,0,0" VerticalAlignment="Top" Width="612" d:ItemsSource="{d:SampleData ItemCount=5}" Visibility="Hidden"/>
+        <DataGrid x:Name="ProductGrid" HorizontalAlignment="Left" Height="175" Margin="178,42,0,0" VerticalAlignment="Top" Width="612" d:ItemsSource="{d:SampleData ItemCount=5}" Visibility="Visible"/>
         <Button Content="Add to cart" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center" Height="40" Width="90"/>
         <Button Content="Order" Margin="40,291,670,103" Click="Button_Click"/>
         <DataGrid x:Name="CartGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="178,238,10,10"/>

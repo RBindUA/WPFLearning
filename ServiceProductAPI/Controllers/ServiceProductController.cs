@@ -1,33 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
+using ServiceProductAPI.Services;
+using ServiceProductAPI.Models;
 
 namespace ServiceProductAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [Route("api/[controller]")]
+    public class ProductsController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly IProductService _productService;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public ProductsController(IProductService productService)
         {
-            _logger = logger;
+            _productService = productService;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetCatalog()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var products = await _productService.GetProductCatalogAsync();
+
+                if (products == null || !products.Any())
+                {
+                    return NotFound("No products found in the AdventureWorks catalog.");
+                }
+            return Ok(products);
         }
     }
 }

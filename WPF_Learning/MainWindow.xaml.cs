@@ -21,6 +21,7 @@ namespace WPF_Learning
         public MainWindow()
         {
             InitializeComponent();
+            ProductGrid.Visibility = Visibility.Hidden;
         }
 
         private async void btnTestLogic_Click(object sender, RoutedEventArgs e)
@@ -38,7 +39,7 @@ namespace WPF_Learning
                 {
                     MessageBox.Show($"Success! ID: {UserSession.BusinessEntityID}");
 
-                    //Auth comleted. Show UI
+                    //Auth completed. Show UI
                     txtPassword.Visibility = Visibility.Collapsed;
                     txtUsername.Visibility = Visibility.Collapsed;
                     ProductGrid.Visibility = Visibility.Visible;
@@ -56,9 +57,9 @@ namespace WPF_Learning
             else
             {
                 //HIDE EVERYTHING during login
-                ProductGrid.Visibility = Visibility.Hidden;
                 txtPassword.Visibility = Visibility.Visible;
                 txtUsername.Visibility = Visibility.Visible;
+                ProductGrid.Visibility = Visibility.Hidden;
 
             }
 
