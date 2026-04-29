@@ -92,7 +92,11 @@ namespace WPF_Learning
                     OrderDate = DateTime.Now,
                     //Required by db
                     DueDate = DateTime.Now.AddDays(7),
-                    ShipDate = DateTime.Now.AddDays(2)
+                    ShipDate = DateTime.Now.AddDays(2),
+                    BillToAddressID = 1,
+                    ShipToAddressID = 1,
+                    ShipMethodID = 1,
+                    AccountNumber = "10-4020-000001"
                 };
 
                 bool isSuccess = await _orderService.SubmitOrderAsync(newOrder);
