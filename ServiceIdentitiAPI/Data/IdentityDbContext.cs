@@ -14,6 +14,7 @@ namespace ServiceIdentityAPI.Data
         public DbSet<UserIdentity> UserIdentity { get; set; }
         public DbSet<EmailRecord> EmailAddress { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<BusinessEntity>BusinessEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +26,9 @@ namespace ServiceIdentityAPI.Data
 
             modelBuilder.Entity<Customer>().ToTable("Customer","Sales");
             modelBuilder.Entity<Customer>().HasKey(c => c.CustomerID);
+
+            modelBuilder.Entity<BusinessEntity>().ToTable("BusinessEntity","Person");
+            modelBuilder.Entity<BusinessEntity>().HasKey(be => be.BusinessEntityID);
 
         }
     }
