@@ -7,14 +7,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="CatalogGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="178,89,10,201"/>
-        <DataGrid x:Name="HistoryGrid" HorizontalAlignment="Left" Height="69" Margin="178,0,0,0" VerticalAlignment="Top" Width="612" d:ItemsSource="{d:SampleData ItemCount=5}" Visibility="Visible"/>
-        <Button x:Name="btnAddToCart" Content="Add to cart" HorizontalAlignment="Left" Margin="0,213,0,0" VerticalAlignment="Top" Height="40" Width="90" Click="btnAddToCart_Click"/>
-        <Button x:Name="btnOrder" Content="Order" Margin="0,331,710,63" Click="btnPlaceOrder_Click"/>
-        <DataGrid x:Name="CartGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="178,238,10,0"/>
-        <Button x:Name="btnTestLogic" Content="Login" HorizontalAlignment="Center" Margin="0,287,0,0" VerticalAlignment="Top" Height="39" Width="90" Click="btnTestLogic_Click"/>
-        <TextBox x:Name="txtUsername" TextWrapping="Wrap" Margin="327,103,327,278"/>
-        <PasswordBox x:Name="txtPassword" HorizontalAlignment="Center" VerticalAlignment="Center" Width="146" Height="39"/>
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <!-- LEFT -->
+            <StackPanel Width="150" Margin="0,0,20,0">
+                <StackPanel Margin="0,0,0,20">
+                    <TextBox x:Name="txtUsername" TextWrapping="Wrap" Height="50" Margin="0,0,0,5"/>
+                    <PasswordBox x:Name="txtPassword" Height="40" Margin="0,0,0,10"/>
+                    <Button x:Name="btnTestLogic" Content="Login" Height="40" Click="btnTestLogic_Click"/>
+                </StackPanel>
+                
+                <Button x:Name="btnAddToCart" Content="Add to cart" Height="40" Margin="0,0,0,10" Click="btnAddToCart_Click"/>
+                <Button x:Name="btnOrder" Content="Order" Height="40" Click="btnPlaceOrder_Click"/>
+            </StackPanel>
 
+            <!-- RIGHT -->
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+                <DataGrid x:Name="HistoryGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Width="Auto" Height="84" Margin="0,0,0,10"/>
+                <DataGrid x:Name="CatalogGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Width="Auto" Height="144" Margin="0,0,0,10"/>
+                <DataGrid x:Name="CartGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Width="Auto" Height="196"/>
+            </StackPanel>
+
+        </StackPanel>
     </Grid>
 </Window>
