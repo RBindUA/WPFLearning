@@ -19,5 +19,7 @@ namespace WPF_Learning.Models
         public int ShipToAddressID { get; set; }
         public int ShipMethodID { get; set; }
         public string AccountNumber { get; set; }
+
+        public List<OrderDetailDTO> OrderLines { get; set; } = new();
     }
 }

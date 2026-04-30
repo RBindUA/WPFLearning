@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using WPF_Learning.Models;
+using System.Text.Json;
 
 namespace WPF_Learning.Services
 {
@@ -31,9 +32,20 @@ namespace WPF_Learning.Services
             _client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", UserSession.Token);
 
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
             try
             {
-                var response = await _client.PostAsJsonAsync(_orderUrl, order);
+                var response = await _client.PostAsJsonAsync(_orderUrl, order, options);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    System.Windows.MessageBox.Show($"Server Error: {response.StatusCode}\n{errorContent}");
+                }
 
                 return response.IsSuccessStatusCode;
             }

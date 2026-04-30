@@ -30,14 +30,12 @@ namespace WPF_Learning
         public MainWindow()
         {
             InitializeComponent();
-            HistoryGrid.Visibility = Visibility.Hidden;
             CatalogGrid.ItemsSource = Catalog;
             CartGrid.ItemsSource = Cart;
         }
 
         private async void btnTestLogic_Click(object sender, RoutedEventArgs e)
         {
-            //TO DO: mess with visibilities and text in the future
             if (txtPassword.Visibility == Visibility.Visible)
             {
                 var authService = new AuthService();
@@ -51,6 +49,7 @@ namespace WPF_Learning
                     MessageBox.Show($"Success! ID: {UserSession.BusinessEntityID}");
 
                     //Auth completed. Show UI
+                    /*
                     txtPassword.Visibility = Visibility.Collapsed;
                     txtUsername.Visibility = Visibility.Collapsed;
                     HistoryGrid.Visibility = Visibility.Visible;
@@ -58,6 +57,7 @@ namespace WPF_Learning
                     btnTestLogic.HorizontalAlignment = HorizontalAlignment.Left;
                     btnTestLogic.VerticalAlignment = VerticalAlignment.Top;
                     btnTestLogic.Margin = new Thickness(0);
+                    */
 
                     LoadOrderHistory();
                     await LoadCatalog();
@@ -96,7 +96,14 @@ namespace WPF_Learning
                     BillToAddressID = 1,
                     ShipToAddressID = 1,
                     ShipMethodID = 1,
-                    AccountNumber = "10-4020-000001"
+                    AccountNumber = "10-4020-000001",
+
+                    OrderLines = Cart.Select(item => new OrderDetailDTO
+                    {
+                        ProductID = item.ProductID,
+                        OrderQty = 1,
+                        UnitPrice = item.ListPrice
+                    }).ToList()
                 };
 
                 bool isSuccess = await _orderService.SubmitOrderAsync(newOrder);

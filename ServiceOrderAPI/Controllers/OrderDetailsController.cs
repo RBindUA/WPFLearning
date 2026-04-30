@@ -38,6 +38,7 @@ namespace ServiceOrderAPI.Controllers
             if (newOrder == null) return BadRequest("Order data is missing.");
 
             //Fix for db 
+            newOrder.OrderDate = DateTime.Now;
             newOrder.DueDate = DateTime.Now.AddDays(7);
             newOrder.ShipDate = DateTime.Now.AddDays(2);
             newOrder.Status = 1;
@@ -48,6 +49,16 @@ namespace ServiceOrderAPI.Controllers
             newOrder.ShipMethodID = 1;
             newOrder.RevisionNumber = 1;
             var success = await _repository.CreateOrderAsync(newOrder);
+
+            if (newOrder.OrderLines != null)
+            {
+                foreach (var line in newOrder.OrderLines)
+                {
+                    line.rowguid = Guid.NewGuid();
+                    line.ModifiedDate = DateTime.Now;
+                    line.UnitPriceDiscount = 0; //required for AdvWork
+                }
+            }
 
             if (!success)
             {

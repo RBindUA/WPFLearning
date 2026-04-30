@@ -11,12 +11,16 @@ namespace ServiceOrderAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OrderDetail>().ToTable("SalesOrderDetail", "Sales")
+            modelBuilder.Entity<OrderDetail>()
+                .ToTable("SalesOrderDetail", "Sales", t => t.HasTrigger("iduSalesOrderDetail"))
                 .HasKey(d => d.SalesOrderDetailID);
+            modelBuilder.Entity<OrderDetail>()
+                .Property(d => d.LineTotal)
+                .ValueGeneratedOnAddOrUpdate();
 
-            modelBuilder.Entity<OrderHeader>().ToTable("SalesOrderHeader", "Sales")
-               .HasKey(o => o.SalesOrderID);
-            //Fixing precomputed sum for order
+            modelBuilder.Entity<OrderHeader>()
+                .ToTable("SalesOrderHeader", "Sales", t => t.HasTrigger("uSalesOrderHeader"))
+                .HasKey(o => o.SalesOrderID);
             modelBuilder.Entity<OrderHeader>()
                 .Property(o => o.TotalDue)
                 .ValueGeneratedOnAddOrUpdate();

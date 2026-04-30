@@ -1,4 +1,6 @@
-﻿namespace ServiceOrderAPI.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ServiceOrderAPI.Models
 {
     public class OrderHeader
     {
@@ -6,6 +8,8 @@
         public DateTime OrderDate { get; set; }
         public int CustomerID { get; set; }
         public byte Status {  get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public decimal TotalDue { get; set; }
         public List<OrderDetail> OrderLines { get; set; } = new();
 
