@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Learning"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"
+        SizeToContent="WidthAndHeight" 
+        MinHeight="300"
+        Width="800" 
+        MinWidth="500" 
+        MaxWidth="1000">
     <Grid>
         <StackPanel Orientation="Horizontal" Margin="10">
             <!-- LEFT -->
@@ -15,18 +20,16 @@
                     <PasswordBox x:Name="txtPassword" Height="40" Margin="0,0,0,10"/>
                     <Button x:Name="btnTestLogic" Content="Login" Height="40" Click="btnTestLogic_Click"/>
                 </StackPanel>
-                
                 <Button x:Name="btnAddToCart" Content="Add to cart" Height="40" Margin="0,0,0,10" Click="btnAddToCart_Click"/>
                 <Button x:Name="btnOrder" Content="Order" Height="40" Click="btnPlaceOrder_Click"/>
             </StackPanel>
-
+            
             <!-- RIGHT -->
             <StackPanel Orientation="Vertical" VerticalAlignment="Top">
-                <DataGrid x:Name="HistoryGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Width="Auto" Height="84" Margin="0,0,0,10"/>
-                <DataGrid x:Name="CatalogGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Width="Auto" Height="144" Margin="0,0,0,10"/>
-                <DataGrid x:Name="CartGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Width="Auto" Height="196"/>
+                <DataGrid x:Name="HistoryGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Width="Auto" MinHeight="50" MaxHeight="200" Margin="0,0,0,10"/>
+                <DataGrid x:Name="CatalogGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Width="Auto" MaxWidth="1000" MinHeight="120" MaxHeight="300" Margin="0,0,0,10"/>
+                <DataGrid x:Name="CartGrid" d:ItemsSource="{d:SampleData ItemCount=5}" Width="Auto" MinHeight="60" MaxHeight="300"/>
             </StackPanel>
-
         </StackPanel>
     </Grid>
 </Window>
