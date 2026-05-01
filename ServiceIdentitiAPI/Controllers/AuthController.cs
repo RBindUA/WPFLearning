@@ -39,5 +39,11 @@ namespace ServiceIdentityAPI.Controllers
                 BusinessEntityID = user.BusinessEntityID
             });
         }
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO request)
+        {
+            return StatusCode(400);
+        
+        }
     }
 }

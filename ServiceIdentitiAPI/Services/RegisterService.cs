@@ -17,28 +17,45 @@ namespace ServiceIdentityAPI.Services
             _context = context;
         }
 
-        public async Task<bool> RegisterAsync(string firstName, string lastName, string email, string password)
+        public async Task<bool> RegisterAsync(RegisterUserDTO dto)
         {
-            //TO DO
-            throw new NotImplementedException(
-                "Going to be done after Identity,User,Order services is complited");
-            //Salt generation
-            /*var salt = Guid.NewGuid().ToString().Substring(0, 10);
-
-            var hash = CreateHash(password, salt);
-
-            var newUser = new UserIdentity
+           using var transaction = await _context.Database.BeginTransactionAsync();
+            try 
             {
-                //NOT WORKING. need to create new ID and parse to several tables in AdventureWorks
-                //Need to add basic funtions first then do that 
-                Email = email,
-                PasswordHash = hash,
-                PasswordSalt = salt
-            };
+                //AdvWorks need to create that first
+                var entity = new BusinessEntity
+                {
+                    rowguid = Guid.NewGuid(),
+                    ModifiedDate = DateTime.Now
+                };
+                _context.BusinessEntities.Add(entity);
+                await _context.SaveChangesAsync();
 
-            _context.UserIdentity.Add(newUser);
-            return await _context.SaveChangesAsync() > 0;
-            */
+                //Hashing password
+                var salt = Guid.NewGuid().ToString().Substring(0, 10);
+                var hash = CreateHash(dto.Password, salt);
+
+                var newUserAuth = new UserIdentity
+                {
+                    BusinessEntityID = entity.BusinessEntityID,
+                    PasswordHash = hash,
+                    PasswordSalt = salt
+                };
+                _context.UserIdentity.Add(newUserAuth);
+
+                //map email
+                var newUserEmail = new EmailRecord
+                {
+                    BusinessEntityID = entity.BusinessEntityID,
+                    EmailAddress = dto.Email
+                };
+                _context.EmailAddress.Add(newUserEmail);
+                //map person
+                var newUserPerson = new Customer
+                {
+
+                }
+            }
         }
         private string CreateHash(string password, string salt)
         {
