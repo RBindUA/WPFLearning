@@ -15,12 +15,14 @@ namespace ServiceIdentityAPI.Controllers
     {
         private readonly LoginService _loginService;
         private readonly TokenService _tokenService;
+        private readonly RegisterService _registerService;
 
 
-        public AuthController(LoginService loginService, TokenService tokenService)
+        public AuthController(LoginService loginService, TokenService tokenService, RegisterService registerService)
         {
             _loginService = loginService;
             _tokenService = tokenService;
+            _registerService = registerService;
         }
 
         [HttpPost("login")]
@@ -42,8 +44,28 @@ namespace ServiceIdentityAPI.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserDTO request)
         {
-            return StatusCode(400);
-        
+            if (request == null)
+            {
+                return BadRequest("Registration data is missing");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                bool isRegistered = await _registerService.RegisterAsync(request);
+
+                if (isRegistered)
+                {
+                    return Ok(new { message = "User registered successfully" });
+                }
+                return BadRequest(new { message = "Registration failed. Email may be already in use" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error during registration", detail = ex.Message });
+            }
         }
     }
 }

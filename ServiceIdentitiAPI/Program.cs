@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<RegisterService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
